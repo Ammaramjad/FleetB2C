@@ -20,12 +20,15 @@ const vehicleSeeds = [
 ] as const;
 
 async function main() {
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD;
+  if (!adminPassword || adminPassword.length < 12) throw new Error('SEED_ADMIN_PASSWORD must be set to at least 12 characters before seeding.');
   for (const key of permissions) await prisma.permission.upsert({where:{key},update:{},create:{key,description:key.replaceAll('.',' ')}});
   const superAdmin = await prisma.role.upsert({where:{name:'Super Admin'},update:{},create:{name:'Super Admin',isSystem:true,description:'Unrestricted platform access'}});
   for (const name of ['Administrator','Operations Manager','Dispatcher','Fleet Manager','Pricing Manager','Customer Support','Finance','Content Manager','Read Only','Customer']) await prisma.role.upsert({where:{name},update:{},create:{name,isSystem:true}});
   const allPermissions = await prisma.permission.findMany();
   await prisma.rolePermission.createMany({data:allPermissions.map(p=>({roleId:superAdmin.id,permissionId:p.id})),skipDuplicates:true});
-  const admin = await prisma.user.upsert({where:{email:'admin@fleetos.tw'},update:{},create:{email:'admin@fleetos.tw',name:'Fleet OS Administrator',passwordHash:await hash(process.env.SEED_ADMIN_PASSWORD||'ChangeMe123!',12)}});
+  const passwordHash=await hash(adminPassword,12);
+  const admin = await prisma.user.upsert({where:{email:'admin@fleetos.tw'},update:{passwordHash,status:'ACTIVE'},create:{email:'admin@fleetos.tw',name:'Fleet OS Administrator',passwordHash}});
   await prisma.userRole.upsert({where:{userId_roleId:{userId:admin.id,roleId:superAdmin.id}},update:{},create:{userId:admin.id,roleId:superAdmin.id}});
 
   const serviceCategory = await prisma.serviceCategory.upsert({where:{slug:'mobility'},update:{},create:{name:'Mobility Services',slug:'mobility'}});

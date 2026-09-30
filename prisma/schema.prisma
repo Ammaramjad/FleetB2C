@@ -243,6 +243,7 @@ model VehicleFeature {
   name String
   icon String?
   vehicle Vehicle @relation(fields:[vehicleId],references:[id],onDelete:Cascade)
+  @@unique([vehicleId,name])
 }
 model VehicleImage {
   id String @id @default(cuid())
