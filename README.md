@@ -22,7 +22,14 @@ npm run db:migrate
 npm run db:seed
 ```
 
-The operations console is available at `/admin`. The seed creates `admin@fleetos.tw`; set `SEED_ADMIN_PASSWORD` before seeding and rotate it after first sign-in. Admin access is protected by an HTTP-only signed session and database-backed role permissions.
+The operations console is available at `/admin` (production: `https://fleet-b2-c.vercel.app/admin`). The development seed creates the following initial Super Admin:
+
+- Email: `admin@fleetos.tw`
+- Password: the value of `SEED_ADMIN_PASSWORD`, or `ChangeMe123!` when the variable is omitted
+
+Set `SEED_ADMIN_PASSWORD` before production seeding and rotate the password after the first sign-in. Admin access is protected by an HTTP-only signed session and database-backed role permissions.
 
 Vercel production must define `DATABASE_URL`, `AUTH_SECRET`, and persistent storage credentials. Uploaded media must use object storage rather than Vercel's ephemeral filesystem.
+
+The repository pins Node.js 20, matching React type packages, and a compatible Prisma CLI/Client pair. `vercel.json` uses npm's legacy peer resolver so a stale Vercel dependency cache cannot reintroduce incompatible React type versions.
 Client-side booking state is persisted in browser storage.
