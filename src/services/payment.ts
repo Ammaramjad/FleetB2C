@@ -1,0 +1,4 @@
+export type PaymentRequest={bookingId:string;amount:number;currency:'TWD';method:string};
+export type PaymentResult={providerReference:string;status:'authorized'|'paid'|'failed';safeMetadata:Record<string,string>};
+export interface PaymentProvider{authorize(request:PaymentRequest):Promise<PaymentResult>;refund(providerReference:string,amount:number):Promise<PaymentResult>}
+export class SimulatedPaymentProvider implements PaymentProvider{async authorize(request:PaymentRequest):Promise<PaymentResult>{return{providerReference:`demo_${crypto.randomUUID()}`,status:'paid',safeMetadata:{bookingId:request.bookingId,method:request.method,mode:'simulation'}}}async refund(providerReference:string):Promise<PaymentResult>{return{providerReference,status:'paid',safeMetadata:{mode:'simulation',action:'refund'}}}}
