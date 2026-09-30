@@ -1,5 +1,5 @@
 'use client';
-import {Search,MapPin,Clock} from 'lucide-react'; import {useEffect,useMemo,useState} from 'react'; import {useRouter} from 'next/navigation'; import {locations,services,vehicles,routes} from '@/data/catalog';
+import {Search,MapPin} from 'lucide-react'; import {useEffect,useMemo,useState} from 'react'; import {useRouter} from 'next/navigation'; import {locations,services,vehicles,routes} from '@/data/catalog';
 const items=[...locations.map(x=>({name:x.name,meta:`${x.type} · ${x.city}`})),...services.map(x=>({name:x.title,meta:'Service'})),...vehicles.map(x=>({name:x.name,meta:`${x.category} · ${x.seats} seater`})),...routes.map(x=>({name:`${x.from} → ${x.to}`,meta:'Popular route'}))];
 export function GlobalSearch(){const[q,setQ]=useState('');const[open,setOpen]=useState(false);const[index,setIndex]=useState(0);const router=useRouter();const result=useMemo(()=>q?items.filter(x=>(x.name+' '+x.meta).toLowerCase().includes(q.toLowerCase())).slice(0,7):[],[q]);
  useEffect(()=>setIndex(0),[q]);const choose=(name:string)=>{setQ(name);setOpen(false);localStorage.setItem('fleet-recent',JSON.stringify([name,...JSON.parse(localStorage.getItem('fleet-recent')||'[]').filter((x:string)=>x!==name)].slice(0,5)));router.push(`/search?q=${encodeURIComponent(name)}`)};
