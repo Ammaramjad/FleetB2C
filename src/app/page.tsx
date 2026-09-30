@@ -1,3 +1,25 @@
-import {HomePage} from '@/components/home/HomePage';import {db} from '@/lib/db';import {services as catalogServices,routes as catalogRoutes,vehicles as catalogVehicles} from '@/data/catalog';import {ServiceType} from '@/types';
-export const dynamic='force-dynamic';
-export default async function Page(){const now=new Date();const[serviceRows,routeRows,vehicleRows,hero]=await Promise.all([db.service.findMany({where:{isActive:true,showOnHomepage:true,deletedAt:null},orderBy:{displayOrder:'asc'}}),db.route.findMany({where:{isActive:true,isFeatured:true},include:{origin:true,destination:true},orderBy:{displayOrder:'asc'}}),db.vehicle.findMany({where:{isPublished:true,isFeatured:true,isAvailable:true,deletedAt:null},include:{category:true,images:{where:{isPrimary:true},take:1}},orderBy:{displayOrder:'asc'}}),db.heroSlide.findFirst({where:{isActive:true,OR:[{startsAt:null},{startsAt:{lte:now}}],AND:[{OR:[{endsAt:null},{endsAt:{gte:now}}]}]},orderBy:{displayOrder:'asc'}})]);return <HomePage hero={hero?{title:hero.title,highlightedText:hero.highlightedText||'',subtitle:hero.subtitle||'',desktopImage:hero.desktopImage}:{title:'Professional Mobility',highlightedText:'Connecting You Across Taiwan',subtitle:'Airport transfers, charter travel and corporate transport with professional drivers you can trust.',desktopImage:'https://images.unsplash.com/photo-1508729640558-1c1f0c20dc35?auto=format&fit=crop&w=2200&q=90'}} services={serviceRows.length?serviceRows.map(s=>({id:s.slug as ServiceType,title:s.title,desc:s.description||'',href:`/${s.slug==='airport'?'airport-transfer':s.slug==='point'?'point-to-point':s.slug==='group'?'group-transport':s.slug==='events'?'special-events':s.slug}`,image:s.imageUrl||'/images/service-fallback.jpg'})):catalogServices} routes={routeRows.length?routeRows.map(r=>({id:r.id,from:r.origin.name,to:r.destination.name,duration:`${r.durationMinutes} min`,km:Number(r.distanceKm),price:Number(r.startingPrice),image:r.imageUrl||'/images/route-fallback.jpg'})):catalogRoutes} vehicles={vehicleRows.length?vehicleRows.map(v=>({id:v.id,slug:v.slug,name:v.name,category:v.category.name,image:v.images[0]?.url||'/images/vehicle-fallback.jpg',seats:v.passengerCapacity,luggage:v.luggageCapacity,basePrice:Number(v.baseFare)})):catalogVehicles.map(v=>({id:v.id,slug:v.slug,name:v.name,category:v.category,image:v.image,seats:v.seats,luggage:v.luggage,basePrice:v.basePrice}))}/>}
+import {HomePage} from '@/components/home/HomePage';
+import {routes, services, vehicles} from '@/data/catalog';
+
+export default function Page(){
+  return <HomePage
+    hero={{
+      title:'Professional Mobility',
+      highlightedText:'Connecting You Across Taiwan',
+      subtitle:'Airport transfers, charter travel and corporate transport with professional drivers you can trust.',
+      desktopImage:'https://images.unsplash.com/photo-1508729640558-1c1f0c20dc35?auto=format&fit=crop&w=2200&q=90',
+    }}
+    services={services}
+    routes={routes}
+    vehicles={vehicles.map(vehicle=>({
+      id:vehicle.id,
+      slug:vehicle.slug,
+      name:vehicle.name,
+      category:vehicle.category,
+      image:vehicle.image,
+      seats:vehicle.seats,
+      luggage:vehicle.luggage,
+      basePrice:vehicle.basePrice,
+    }))}
+  />;
+}
