@@ -1,0 +1,2 @@
+import Link from 'next/link';import {ArrowRight} from 'lucide-react';
+export function InfoPage({eyebrow,title,copy,items}:{eyebrow:string;title:string;copy:string;items:string[]}){return <main className="inner-page info-page"><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p className="lead">{copy}</p><div>{items.map((x,i)=><article key={x}><i>0{i+1}</i><h2>{x}</h2><p>Thoughtfully designed by our Taiwan mobility team to make every journey feel effortless.</p><Link href="/#book">Explore <ArrowRight/></Link></article>)}</div></main>}
