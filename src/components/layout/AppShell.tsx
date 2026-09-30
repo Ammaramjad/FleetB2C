@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link'; import {usePathname} from 'next/navigation'; import {useEffect,useRef,useState} from 'react';
-import {Home,CalendarDays,Plane,Route,CarFront,UserRoundCheck,BusFront,Compass,Gift,HelpCircle,Menu,X,Heart,LogIn,Globe2,Search,Settings,MapPin} from 'lucide-react'; import {GlobalSearch} from './GlobalSearch';
+import {Home,CalendarDays,Plane,Route,CarFront,UserRoundCheck,BusFront,Compass,Gift,HelpCircle,Menu,X,Heart,LogIn,Globe2,Settings,MapPin} from 'lucide-react'; import {GlobalSearch} from './GlobalSearch';
 const nav=[['Home','/',Home],['Book a Ride','/#book',CalendarDays],['Airport Transfer','/airport-transfer',Plane],['Point-to-Point','/point-to-point',Route],['Self-Drive Rental','/self-drive',CarFront],['Chauffeur','/chauffeur',UserRoundCheck],['Group Transport','/group-transport',BusFront],['Fleet','/fleet',CarFront],['Explore Taiwan','/explore',Compass],['Offers','/offers',Gift],['Help Center','/help',HelpCircle]] as const;
 const drawerNav=[['Book a Ride','/#book',CalendarDays],['My Bookings','/account/bookings',CalendarDays],['Favorites','/account/favorites',Heart],['Fleet','/fleet',CarFront],['Explore Taiwan','/explore',MapPin],['Offers','/offers',Gift],['Help','/help',HelpCircle],['Settings','/account/profile',Settings]] as const;
 export function AppShell({children}:{children:React.ReactNode}){const path=usePathname();const[drawer,setDrawer]=useState(false);const[lang,setLang]=useState('EN');const closeRef=useRef<HTMLButtonElement>(null);
