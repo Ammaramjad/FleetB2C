@@ -24,5 +24,15 @@ npm run db:seed
 
 The operations console is available at `/admin`. The seed creates `admin@fleetos.tw`; set `SEED_ADMIN_PASSWORD` before seeding and rotate it after first sign-in. Admin access is protected by an HTTP-only signed session and database-backed role permissions.
 
-Vercel production must define `DATABASE_URL`, `AUTH_SECRET`, and persistent storage credentials. Uploaded media must use object storage rather than Vercel's ephemeral filesystem.
+Vercel Preview and Production must each define `DATABASE_URL` and `AUTH_SECRET`. Run
+`npm run db:migrate` against each target database before deploying and run
+`npm run db:seed` once with a temporary `SEED_ADMIN_PASSWORD` of at least 12
+characters. The idempotent seed updates the dedicated admin password, so remove
+`SEED_ADMIN_PASSWORD` after the seed completes. `BLOB_READ_WRITE_TOKEN` is required
+when media uploads use the configured `vercel-blob` storage provider.
+
+The public homepage reads published CMS/catalog records from PostgreSQL. If those
+optional records have not been seeded yet, it renders the bundled public catalog
+instead of failing the entire route; database connectivity and schema migrations
+remain required for administration and authentication.
 Client-side booking state is persisted in browser storage.
