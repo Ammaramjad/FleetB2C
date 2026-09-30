@@ -30,3 +30,5 @@ The operations console is available at `/admin` (production: `https://fleet-b2-c
 Set `SEED_ADMIN_PASSWORD` before production seeding and rotate the password after the first sign-in. Admin access is protected by an HTTP-only signed session and database-backed role permissions.
 
 Vercel production must define `DATABASE_URL`, `AUTH_SECRET`, and persistent storage credentials. Uploaded media must use object storage rather than Vercel's ephemeral filesystem.
+
+The repository pins Node.js 20, matching React type packages, and a compatible Prisma CLI/Client pair. `vercel.json` uses npm's legacy peer resolver so a stale Vercel dependency cache cannot reintroduce incompatible React type versions.
