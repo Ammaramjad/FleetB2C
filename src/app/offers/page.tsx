@@ -1,0 +1,1 @@
+import {InfoPage} from '@/components/shared/InfoPage';export default function Page(){return <InfoPage eyebrow="MEMBER OFFERS" title="Go further for less." copy="Seasonal packages and thoughtful upgrades for journeys across Taiwan." items={['Airport welcome — 10% off','Family Taiwan package','Business traveler pass']}/>}
