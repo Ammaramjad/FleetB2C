@@ -11,4 +11,18 @@ npm run dev
 
 Open `http://localhost:3000`. Other checks are available with `npm run build`, `npm run lint`, and `npm test`.
 
-The product uses local storage for demo persistence and never sends or stores raw payment card details.
+Zustand is used only for transient booking-wizard state. Persistent catalog, CMS, identity, operations, and financial data belongs in PostgreSQL. Payment abstractions never send or store raw card numbers or security codes.
+
+## Database and administration
+
+Fleet OS 2.0 uses PostgreSQL through Prisma as its authoritative business-data store. Copy `.env.example` to `.env`, provide a PostgreSQL connection and secure `AUTH_SECRET`, then run:
+
+```bash
+npm run db:migrate
+npm run db:seed
+```
+
+The operations console is available at `/admin`. The seed creates `admin@fleetos.tw`; set `SEED_ADMIN_PASSWORD` before seeding and rotate it after first sign-in. Admin access is protected by an HTTP-only signed session and database-backed role permissions.
+
+Vercel production must define `DATABASE_URL`, `AUTH_SECRET`, and persistent storage credentials. Uploaded media must use object storage rather than Vercel's ephemeral filesystem.
+Client-side booking state is persisted in browser storage.
