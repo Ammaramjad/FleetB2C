@@ -1,0 +1,1 @@
+import {InfoPage} from '@/components/shared/InfoPage';export default function Page(){return <InfoPage eyebrow="DESTINATIONS" title="Find your next Taiwan story." copy="Curated destinations with private door-to-door transportation." items={['Taipei','Jiufen','Sun Moon Lake','Alishan','Taroko','Kenting']}/>}

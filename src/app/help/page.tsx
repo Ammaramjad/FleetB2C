@@ -1,0 +1,1 @@
+import {InfoPage} from '@/components/shared/InfoPage';export default function Page(){return <InfoPage eyebrow="24/7 SUPPORT" title="How can we help?" copy="Our Taiwan-based mobility team is available before, during and after your ride." items={['Booking & changes','Airport pickups','Payments & refunds','Accessibility support']}/>}
