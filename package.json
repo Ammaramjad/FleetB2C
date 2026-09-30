@@ -1,1 +1,50 @@
-{"name":"fleet-os","version":"2.0.0","private":true,"scripts":{"dev":"next dev","build":"prisma generate && next build","lint":"eslint .","test":"vitest run","db:generate":"prisma generate","db:migrate":"prisma migrate deploy","db:seed":"tsx prisma/seed.ts","postinstall":"prisma generate"},"prisma":{"seed":"tsx prisma/seed.ts"},"dependencies":{"@hookform/resolvers":"latest","@prisma/client":"latest","@tanstack/react-query":"latest","bcryptjs":"latest","jose":"latest","lucide-react":"latest","next":"latest","react":"latest","react-dom":"latest","react-hook-form":"latest","zod":"latest","zustand":"latest"},"devDependencies":{"@eslint/eslintrc":"latest","@testing-library/react":"latest","@types/bcryptjs":"latest","@types/node":"latest","@types/react":"latest","@types/react-dom":"latest","eslint":"latest","eslint-config-next":"latest","jsdom":"latest","prisma":"latest","tsx":"latest","typescript":"latest","vitest":"latest"}}
+{
+  "name": "fleet-os",
+  "version": "2.0.0",
+  "private": true,
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "tsx prisma/seed.ts",
+    "postinstall": "prisma generate"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "latest",
+    "@prisma/client": "6.19.0",
+    "@tanstack/react-query": "latest",
+    "bcryptjs": "latest",
+    "jose": "latest",
+    "lucide-react": "latest",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-hook-form": "latest",
+    "zod": "latest",
+    "zustand": "latest"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "latest",
+    "@testing-library/react": "latest",
+    "@types/bcryptjs": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "jsdom": "latest",
+    "prisma": "6.19.0",
+    "tsx": "latest",
+    "typescript": "latest",
+    "vitest": "latest"
+  }
+}
