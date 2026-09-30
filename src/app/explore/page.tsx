@@ -1,0 +1,1 @@
+import {InfoPage} from '@/components/shared/InfoPage';export default function Page(){return <InfoPage eyebrow="EXPLORE TAIWAN" title="The island is yours." copy="Local favorites, iconic landmarks and hidden corners—connected by FLEET OS." items={['Taipei after dark','Sun Moon Lake','Alishan sunrise','Taroko Gorge','Kenting coast','Kaohsiung culture']}/>}

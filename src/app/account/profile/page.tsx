@@ -1,0 +1,1 @@
+import {InfoPage} from '@/components/shared/InfoPage';export default function Page(){return <InfoPage eyebrow="ACCOUNT" title="Profile & settings" copy="Manage your personal details, language, saved places and communication preferences." items={['Personal details','Saved places','Language & region','Communication preferences']}/>}
