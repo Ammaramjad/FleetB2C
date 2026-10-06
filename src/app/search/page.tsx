@@ -1,1 +1,1 @@
-import {SearchPage} from '@/components/search/SearchPage';export default function Page(){return <SearchPage/>}
+import {SearchPage} from '@/components/search/SearchPage';import {getVehicles} from '@/lib/public-catalog';export const dynamic='force-dynamic';export default async function Page(){return <SearchPage vehicles={await getVehicles()}/>}

@@ -1,3 +1,4 @@
-import type {Metadata} from 'next'; import './globals.css'; import {AppShell} from '@/components/layout/AppShell';
-export const metadata:Metadata={title:'FLEET OS — Taiwan Mobility',description:'Premium mobility, connected across Taiwan'};
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body><AppShell>{children}</AppShell></body></html>}
+import {db} from '@/lib/db';import type {Metadata} from 'next'; import './globals.css'; import {AppShell} from '@/components/layout/AppShell';
+const defaultMetadata:Metadata={title:'FLEET OS — Taiwan Mobility',description:'Premium mobility, connected across Taiwan'};
+export const dynamic='force-dynamic';export async function generateMetadata():Promise<Metadata>{const seo=await db.sEOSetting.findUnique({where:{path:'/'}}).catch(()=>null);return seo?{title:seo.title,description:seo.description}:defaultMetadata;}
+export default async function RootLayout({children}:{children:React.ReactNode}){const navigation=await db.navigationItem.findMany({where:{isActive:true},orderBy:{displayOrder:'asc'}}).catch(()=>[]);return <html lang="en"><body><AppShell navigation={navigation}>{children}</AppShell></body></html>}
